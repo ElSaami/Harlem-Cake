@@ -1,3 +1,5 @@
+import { withBasePath } from '@/lib/paths';
+
 export const PRODUCTS = {
   cakes: [
     {
@@ -7,7 +9,7 @@ export const PRODUCTS = {
       tag: `Nuestra versión del clásico neoyorquino:
             Una cookie tierna y un centro irresistible de manjar o chocolate.
             Crujiente por fuera, suave por dentro, y con ese toque que hace que cada mordida se sienta como un abrazo dulce ₊˚⊹ᰔ`,
-      img: "/images/cookies/newyork.jpg",
+      img: withBasePath('/images/cookies/newyork.jpg'),
     },
     {
       id: "c2",
@@ -16,7 +18,7 @@ export const PRODUCTS = {
       tag: `La magia también se hornea.
             Galleta suave, rellena de malvavisco fundido y coronada con los coloridos Lucky Charms.
             Un viaje directo a la infancia, donde cada bocado sabe a ilusión y ternura. ₊˚⊹ᰔ`,
-      img: "/images/cookies/luckycharms.jpg",
+      img: withBasePath('/images/cookies/luckycharms.jpg'),
     },
     {
       id: "c3",
@@ -24,7 +26,7 @@ export const PRODUCTS = {
       price: 1800,
       tag: `Chocolate intenso, trozos de maní tostado y un centro cremoso de mantequilla de maní.
             Una combinación perfecta entre lo dulce y lo salado, pensada para quienes aman los contrastes que conquistan desde el primer bocado ₊˚⊹ᰔ`,
-      img: "/images/cookies/peanuts.jpg",
+      img: withBasePath('/images/cookies/peanuts.jpg'),
     },
     {
       id: "c4",
@@ -33,7 +35,7 @@ export const PRODUCTS = {
       tag: `Refrescante, delicada y con un toque gourmet.
             Una galleta de limón con relleno de ganache cítrica, perfecta para quienes buscan un dulce equilibrio entre frescura y amor.
             Cada mordida es un rayito de sol. ₊˚⊹ᰔ`,
-      img: "/images/cookies/lemon.jpg",
+      img: withBasePath('/images/cookies/lemon.jpg'),
     },
     {
       id: "c5",
@@ -42,7 +44,7 @@ export const PRODUCTS = {
       tag: `Colores, textura y pura felicidad en forma de galleta.
             Crujiente por fuera, suave por dentro, con trocitos de Oreo que derriten el corazón.
             Hecha para los que creen que la vida —y el postre— deben ser alegres y dulces. ₊˚⊹ᰔ`,
-      img: "/images/cookies/oreo.jpg",
+      img: withBasePath('/images/cookies/oreo.jpg'),
     },
   ],
   scoops: [

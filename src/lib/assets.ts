@@ -1,7 +1,6 @@
-import cakesLogo from "@/../public/images/logos/harlem-cakes.png";
-import scoopsLogo from "@/../public/images/logos/harlem-scoops.png";
+import { withBasePath } from '@/lib/paths';
 
 export const LOGOS = {
-  cakes: cakesLogo,
-  scoops: scoopsLogo,
+  cakes: withBasePath('/harlem-cakes.png'),
+  scoops: withBasePath('/harlem-scoops.png'),
 };
