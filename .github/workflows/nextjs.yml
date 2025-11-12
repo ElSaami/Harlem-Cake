@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy Next.js to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -25,29 +25,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
-      # Usa npm ci sólo si existe package-lock.json; si no, usa npm install
-      - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+      - name: Install deps
+        run: npm ci
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build (Next output: export)
+      - name: Build (Next output export)
         env:
-          GITHUB_ACTIONS: true   # activa basePath/assetPrefix condicional en next.config.js
-        run: npm run build   # <-- nada de "next export"
+          # Permite que Next detecte basePath/assetPrefix para GitHub Pages
+          GITHUB_ACTIONS: true
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out          # Next genera "out/" con output:'export'
+          path: out
 
   deploy:
     needs: build

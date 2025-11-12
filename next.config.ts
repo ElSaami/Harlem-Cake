@@ -1,15 +1,12 @@
-// next.config.js
-/** @type {import('next').NextConfig} */
-const isGH = process.env.GITHUB_ACTIONS === 'true';
+// next.config.ts
+const isProd = process.env.GITHUB_ACTIONS === 'true';
+const repo = 'Harlem-Cake'; // <-- nombre EXACTO del repo
 
-module.exports = {
-  output: 'export',
-  images: { unoptimized: true },
-  trailingSlash: true,
-  // Opcional si publicas bajo /<repo>:
-  ...(process.env.GITHUB_ACTIONS === 'true' ? {
-    basePath: '/<TU_REPO>',
-    assetPrefix: '/<TU_REPO>/',
-  } : {}),
+const nextConfig = {
+  output: 'export',                 // genera ./out con `next build`
+  images: { unoptimized: true },    // necesario en GH Pages
+  basePath: isProd ? `/${repo}` : '',
+  assetPrefix: isProd ? `/${repo}/` : '',
 };
 
+export default nextConfig;
