@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { withBasePath } from "@/lib/paths";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PALETTE, FONT_STACK, clp } from "@/lib/theme";
@@ -81,7 +82,7 @@ export default function ProductCard({ p, kind }: { p: any; kind: Kind }) {
             aria-label={`Ver detalle de ${p.title}`}
           >
             <Image
-              src={p.img.startsWith("/") ? p.img : `/${p.img}`}
+              src={withBasePath(p.img)}
               alt={p.title}
               fill
               className="
