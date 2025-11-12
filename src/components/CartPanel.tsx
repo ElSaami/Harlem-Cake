@@ -4,6 +4,7 @@ import * as React from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Swal from "sweetalert2";
+
 import {
   Sheet,
   SheetContent,
@@ -20,7 +21,9 @@ import { ShoppingCart, Trash2, Minus, Plus, X } from "lucide-react";
 type Props = { open: boolean; onOpenChange: (v: boolean) => void };
 
 export default function CartPanel({ open, onOpenChange }: Props) {
-  const { items, inc, remove, total, /* @ts-ignore */ clear } = useCart();
+  // 👇 No desestructuramos `clear` para evitar el error de tipos en CI.
+  const cart = useCart();
+  const { items, inc, remove, total } = cart;
 
   // Color principal según tienda
   const pathname = usePathname();
@@ -39,15 +42,16 @@ export default function CartPanel({ open, onOpenChange }: Props) {
     window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
   };
 
-  // Limpiar carrito
+  // Limpiar carrito con fallback si el contexto no expone `clear`
   const clearCart = () => {
-    if (typeof clear === "function") {
-      clear();
+    const maybeClear = (cart as any)?.clear as (() => void) | undefined;
+    if (typeof maybeClear === "function") {
+      maybeClear();
     } else {
       for (const it of items) remove(it.id);
     }
 
-    // 🔔 Toast pequeño
+    // 🔔 Toast pequeño y cute
     Swal.fire({
       toast: true,
       position: "top-end",
