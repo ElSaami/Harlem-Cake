@@ -63,7 +63,7 @@ export default function ProductCard({ p, kind }: { p: any; kind: Kind }) {
           transition-all duration-300
           hover:-translate-y-0.5 hover:shadow-lg
           "
-        style={{ boxShadow: "0 6px 18px rgba(0,0,0,0.06)" }}
+        style={{ boxShadow: "0 6px 18px rgba(250, 0, 0, 0.06)" }}
       >
         {/* Imagen — clic abre modal */}
         <DialogTrigger asChild>

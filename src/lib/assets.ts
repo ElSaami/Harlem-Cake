@@ -1,4 +1,6 @@
+import { withBasePath } from "@/lib/paths";
+
 export const LOGOS = {
-  cakes: "/logos/harlem-cakes.png",
-  scoops: "/logos/harlem-scoops.png",
-};
+  cakes: withBasePath("/images/logos/harlem-cakes.png"),
+  scoops: withBasePath("/images/logos/harlem-scoops.png"),
+} as const;
