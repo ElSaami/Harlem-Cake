@@ -21,21 +21,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
+          cache: 'npm'
 
-      - name: Install deps
-        run: npm ci
+      # Usa npm ci sólo si existe package-lock.json; si no, usa npm install
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-      - name: Build (Next export)
-        run: npm run build && npx next export
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build (Next output: export)
+        env:
+          GITHUB_ACTIONS: true   # activa basePath/assetPrefix condicional en next.config.js
+        run: npm run build   # <-- nada de "next export"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./out          # Next genera "out/" con output:'export'
 
   deploy:
     needs: build

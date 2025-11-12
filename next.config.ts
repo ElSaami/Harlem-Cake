@@ -3,7 +3,13 @@
 const isGH = process.env.GITHUB_ACTIONS === 'true';
 
 module.exports = {
-  output: 'export',                   // ✅ reemplaza a "next export"
-  images: { unoptimized: true },      // ✅ necesario en GitHub Pages
-  trailingSlash: true,                // ✅ genera index.html por carpeta (mejor en GH Pages)
+  output: 'export',
+  images: { unoptimized: true },
+  trailingSlash: true,
+  // Opcional si publicas bajo /<repo>:
+  ...(process.env.GITHUB_ACTIONS === 'true' ? {
+    basePath: '/<TU_REPO>',
+    assetPrefix: '/<TU_REPO>/',
+  } : {}),
 };
+
