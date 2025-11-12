@@ -5,12 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { PALETTE } from "@/lib/theme";
 import { cn } from "@/lib/utils";
+import { withBasePath } from "@/lib/paths"; // 👈
 
-type Slide = {
-  src: string;       // Debe empezar con "/banners/..." (carpeta public)
-  alt?: string;
-  caption?: string;
-};
+type Slide = { src: string; alt?: string; caption?: string };
 
 type Props = {
   images: Slide[];
@@ -29,14 +26,12 @@ export default function BannerCarousel({
   const [hover, setHover] = React.useState(false);
   const total = images.length;
 
-  // autoplay
   React.useEffect(() => {
     if (hover || total <= 1) return;
     const t = setInterval(() => setIndex((i) => (i + 1) % total), intervalMs);
     return () => clearInterval(t);
   }, [hover, total, intervalMs]);
 
-  // teclado
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") setIndex((i) => (i + 1) % total);
@@ -47,8 +42,6 @@ export default function BannerCarousel({
   }, [total]);
 
   const go = (i: number) => setIndex((i + total) % total);
-
-  // Si no hay imágenes, no renderizamos nada
   if (total === 0) return null;
 
   return (
@@ -65,19 +58,19 @@ export default function BannerCarousel({
         <motion.div
           key={index}
           className="absolute inset-0"
-          initial={{ opacity: 0.0, scale: 1.01 }}
+          initial={{ opacity: 0, scale: 1.01 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.995 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
         >
           <Image
-            // 👇 IMPORTANTE: rutas absolutas desde /public (NO withBasePath)
-            src={images[index]!.src}
+            // 👇 fuerza el prefijo /Harlem-Cake en GH Pages
+            src={withBasePath(images[index]!.src)}
             alt={images[index]!.alt ?? `slide-${index + 1}`}
             fill
             className="object-cover"
             sizes="100vw"
-            priority={index === 0}  // solo el primer slide con prioridad
+            priority={index === 0}
           />
 
           {images[index]?.caption && (
@@ -99,7 +92,7 @@ export default function BannerCarousel({
             aria-label="Anterior"
             onClick={() => go(index - 1)}
             className="absolute left-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full shadow-md grid place-items-center transition hover:scale-105"
-            style={{ background: PALETTE.white, border: `1px solid ${accent}` }}
+            style={{ background: "#fff", border: `1px solid ${accent}` }}
           >
             ‹
           </button>
@@ -107,7 +100,7 @@ export default function BannerCarousel({
             aria-label="Siguiente"
             onClick={() => go(index + 1)}
             className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full shadow-md grid place-items-center transition hover:scale-105"
-            style={{ background: PALETTE.white, border: `1px solid ${accent}` }}
+            style={{ background: "#fff", border: `1px solid ${accent}` }}
           >
             ›
           </button>

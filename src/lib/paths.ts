@@ -1,5 +1,6 @@
-export const basePath =
-  process.env.NEXT_PUBLIC_BASE_PATH ? process.env.NEXT_PUBLIC_BASE_PATH : '';
-
-export const withBasePath = (p: string) =>
-  p.startsWith('http') ? p : `${basePath}${p}`;
+// src/lib/paths.ts
+export function withBasePath(path: string): string {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  // normaliza para evitar dobles //
+  return `${base}${path}`.replace(/\/{2,}/g, "/");
+}
